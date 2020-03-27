@@ -1,7 +1,6 @@
 package de.gamejam.model;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class ChipQueue {
 
@@ -20,11 +19,5 @@ public class ChipQueue {
       nextChips = new LinkedList<>();
     }
     return nextChips;
-  }
-
-  public void useChip(Chip chip){
-    usableChips.remove(chip);
-    usableChips.addFirst(nextChips.removeLast());
-    usableChips.addFirst(nextChips.removeLast());
   }
 }

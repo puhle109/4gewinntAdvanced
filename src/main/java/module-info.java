@@ -1,4 +1,4 @@
-module org.example {
+module de.gamejam {
     requires javafx.controls;
     requires javafx.fxml;
 
