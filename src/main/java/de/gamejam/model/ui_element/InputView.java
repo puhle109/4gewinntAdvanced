@@ -5,7 +5,7 @@ public class InputView extends ChipView {
   private int column;
 
   public InputView(int column) {
-    super();
+    super(-1,-1);
     this.column = column;
   }
 

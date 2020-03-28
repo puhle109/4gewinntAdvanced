@@ -60,14 +60,13 @@ public class QueueController {
     Chip chip = new Chip();
     chip.setChipColor(color);
 
-    //Chiptyp ermitteln (mega unschoen derzeit)
     double r = Math.random();
 
     ChipType chipType;
-    if (r <= 0.8) {
+    if (r <= 0.6) {
       chipType = ChipType.SIMPLE;
-//    } else if (r <= 0.7) {
-//      chipType = ChipType.BOMB;
+    } else if (r <= 0.7) {
+      chipType = ChipType.BOMB;
 //    } else if (r <= 0.8) {
 //      chipType = ChipType.COLOR;
 //    } else if (r <= 0.9) {

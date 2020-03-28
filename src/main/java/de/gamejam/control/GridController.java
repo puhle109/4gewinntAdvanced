@@ -167,7 +167,7 @@ public class GridController {
             skillSwitch(chipView);
 
         } else if (chipView.getChip().getChipType() == ChipType.BOMB) {
-            skillBomb();
+            skillBomb(chipView);
 
         }
     }
@@ -178,17 +178,26 @@ public class GridController {
 
         ChipView left = getGrid().getChipViewAt(row-1, col);
         ChipView right = getGrid().getChipViewAt(row+1, col);
-        Chip tmp = left.getChip();
 
         if (left!=null&&right!=null){
+            Chip tmp = left.getChip();
             left.setChip(right.getChip());
             right.setChip(tmp);
         }
 
     }
 
-    private void skillBomb(){
+    private void skillBomb(ChipView chipView){
+        int row = chipView.getRow();
+        int col = chipView.getCol();
 
+        ChipView left = getGrid().getChipViewAt(row-1, col);
+        ChipView right = getGrid().getChipViewAt(row+1, col);
+        ChipView down = getGrid().getChipViewAt(row, col-1);
+
+        left.setChip(null);
+        right.setChip(null);
+        down.setChip(null);
     }
 
 }

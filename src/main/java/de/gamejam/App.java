@@ -170,7 +170,7 @@ public class App extends Application {
     int colCount = 0;
     // Zukünftige Chips anfügen
     for (Chip chip : player.getChipQueue().getNextChips()) {
-      ChipView chipView = new ChipView();
+      ChipView chipView = new ChipView(-1,-1);
       chipView.setOpacity(.5);
       chipView.setChip(chip);
       chipQueuePane.add(chipView, colCount, 0);

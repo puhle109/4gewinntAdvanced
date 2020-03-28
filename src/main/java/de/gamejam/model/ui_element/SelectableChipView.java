@@ -9,7 +9,7 @@ public class SelectableChipView extends ChipView {
   private boolean isSelected;
 
   public SelectableChipView() {
-    super();
+    super(-1,-1);
   }
 
   public void setSelected() {

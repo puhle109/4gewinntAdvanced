@@ -39,14 +39,16 @@ public class Chip {
     this.y = y;
   }
 
+
+  //TODO: clean this
   public String getImageFilename(){
     // Wir haben bestimmte Chips, die keiner Farbe zugeordnet sind und welche, die eine bestimmte Farbe haben
-    switch (chipType){
+   /* switch (chipType){
       case SIMPLE:
       case SWITCH:
         return chipColor.getValue() + "_" + chipType.getFilename();
-      default:
-        return chipType.getFilename();
-    }
+      default:*/
+        return chipColor.getValue() + "_" + chipType.getFilename();
+   // }
   }
 }

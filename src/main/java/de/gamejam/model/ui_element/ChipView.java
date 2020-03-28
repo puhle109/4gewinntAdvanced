@@ -27,7 +27,7 @@ public class ChipView extends BorderPane {
   private int row;
   private int col;
 
-  public ChipView(int row,int col) {
+  public ChipView(int col,int row) {
     super();
     this.row=row;
     this.col=col;
