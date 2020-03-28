@@ -8,13 +8,13 @@ import de.gamejam.model.Player;
 public class GameController {
 
   private final QueueController queueController;
-  private final FieldController fieldController;
+  private final GridController gridController;
   private final List<Player> players;
 
 
   public GameController() {
     queueController = new QueueController();
-    fieldController = new FieldController();
+    gridController = new GridController();
     players = new LinkedList<>();
   }
 
