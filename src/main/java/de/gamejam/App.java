@@ -90,7 +90,13 @@ public class App extends Application {
     for (Chip chip : player.getChipQueue().getUsableChips()) {
       final ChipView chipView = new ChipView();
       chipView.setOnMouseClicked(mouseEvent -> {
+
         player.setChoosenChip(chipView);
+
+        //alle unselected
+//        queuePane.getChildren()
+
+        // ausgewählen selecten
         chipView.setSelected();
       });
       chipView.setChip(chip);

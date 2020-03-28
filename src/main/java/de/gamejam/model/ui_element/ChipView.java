@@ -14,6 +14,7 @@ public class ChipView extends ImageView {
 
   public static final int IMAGE_SIZE = 50;
   private Chip chip;
+  private PathTransition animation;
 
   public ChipView() {
     super();
@@ -52,7 +53,7 @@ public class ChipView extends ImageView {
   }
 
   public void setSelected() {
-    final PathTransition animation = new PathTransition();
+    animation = new PathTransition();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.setNode(this);
     Line shape = new Line();
@@ -64,5 +65,9 @@ public class ChipView extends ImageView {
     animation.setAutoReverse(true);
     animation.setDelay(Duration.millis(100));
     animation.play();
+  }
+
+  public void setUnselected(){
+    animation.stop();
   }
 }
