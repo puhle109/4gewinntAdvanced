@@ -43,7 +43,7 @@ public class Grid {
         List<LinkedList<ChipView>> thefield = getChips();
 
         if (row < 0 || col < 0) {
-            return new ChipView();
+            return null;
         }
 
         if (row < thefield.size()) {
@@ -53,7 +53,7 @@ public class Grid {
 
             }
         }
-        return new ChipView();
+        return null;
     }
 
     public void addChip(Chip chip, int x) {
@@ -79,7 +79,10 @@ public class Grid {
         int checkWin = 1;
 
         for (int k = 1; k < winSize; k++) {
-            if (color != getChipViewAt(row + k, col).getColor()) {
+
+            ChipView chipView = getChipViewAt(row + k, col);
+
+            if (chipView==null || color != chipView.getColor()) {
                 break;
             }
             checkWin++;
@@ -89,8 +92,10 @@ public class Grid {
 
     private int checkVertical(int row, int col, int winSize, ChipColor color) {
         int checkWin = 1;
+
         for (int k = 1; k < winSize; k++) {
-            if (color != getChipViewAt(row, col + k).getColor()) {
+            ChipView chipView = getChipViewAt(row, col + k);
+            if (chipView==null || color != chipView.getColor()) {
                 break;
             }
             checkWin++;
@@ -103,7 +108,8 @@ public class Grid {
         int checkWin = 1;
 
         for (int k = 1; k < winSize; k++) {
-            if (color != getChipViewAt(row + k, col + k).getColor()) {
+            ChipView chipView = getChipViewAt(row + k, col + k);
+            if (chipView==null || color != chipView.getColor()) {
                 break;
             }
             checkWin++;
@@ -115,7 +121,8 @@ public class Grid {
             checkWin = 1;
             if (col > winSize) {
                 for (int k = 1; k < winSize; k++) {
-                    if (color != getChipViewAt(row + k, col - k).getColor()) {
+                    ChipView chipView = getChipViewAt(row + k, col - k);
+                    if (chipView==null||color != chipView.getColor()) {
                         break;
                     }
                     checkWin++;
