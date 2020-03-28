@@ -6,6 +6,7 @@ public enum ChipType {
   //einfacher on-place
   SWITCH("switch.png"),
   BOMB("bomb.png"),
+  LIGHTNING("lightning.png"),
   COLOR("color.png"),
   TABLE_FLIP("table_flip.png"),
 

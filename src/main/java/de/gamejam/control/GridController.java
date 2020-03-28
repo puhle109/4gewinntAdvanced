@@ -158,6 +158,12 @@ public class GridController {
         return endWin;
     }
 
+    //TODO: alle steine die nicht auf einem stein oder dem boden liegen "fallen" herunter, bis alle liegen
+    public void gravity(){
+
+
+    }
+
     public void useSpecial(ChipView chipView) {
         if (chipView.getChip().getChipType() == ChipType.SIMPLE) {
             return;
@@ -168,6 +174,9 @@ public class GridController {
 
         } else if (chipView.getChip().getChipType() == ChipType.BOMB) {
             skillBomb(chipView);
+
+        } else if (chipView.getChip().getChipType() == ChipType.LIGHTNING) {
+            skillLightning(chipView);
 
         }
     }
@@ -194,10 +203,51 @@ public class GridController {
         ChipView left = getGrid().getChipViewAt(row-1, col);
         ChipView right = getGrid().getChipViewAt(row+1, col);
         ChipView down = getGrid().getChipViewAt(row, col-1);
+        if (left!=null){left.setChip(null);}
+        if (right!=null){right.setChip(null);}
+        if (down!=null){down.setChip(null);}
+        chipView.setChip(null);
+    }
 
-        left.setChip(null);
-        right.setChip(null);
-        down.setChip(null);
+    private void skillLightning(ChipView chipView){
+        int row = chipView.getRow();
+        int col = chipView.getCol();
+
+        ChipView down = getGrid().getChipViewAt(row, col-1);
+        if (down!=null){
+            down.setChip(null);
+            down = getGrid().getChipViewAt(row, col-2);
+
+            if (down!=null){
+                down.setChip(null);
+            }
+        }
+
+    }
+
+    private void skillColor(ChipView chipView){
+        int row = chipView.getRow();
+        int col = chipView.getCol();
+        ChipColor color = chipView.getColor();
+
+        ChipView down = getGrid().getChipViewAt(row, col-1);
+        if (down!=null){
+            down.getChip().setChipColor(color);
+        }
+
+    }
+
+    private void skillFlip(ChipView chipView){
+        int row = chipView.getRow();
+        int col = chipView.getCol();
+
+        ChipView down = getGrid().getChipViewAt(row, col-1);
+        if (down!=null){
+            Chip tmp = down.getChip();
+            down.setChip(chipView.getChip());
+            chipView.setChip(tmp);
+        }
+
     }
 
 }

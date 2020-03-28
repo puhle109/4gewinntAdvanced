@@ -56,6 +56,7 @@ public class GameController {
     }
 
     Chip chip = activePlayer.getChoosenChip().getChip();
+    activePlayer.setChoosenChip(null);
     ChipView chipView = gridController.getGrid().addChip(chip, column);
 
     gridController.useSpecial(chipView);
