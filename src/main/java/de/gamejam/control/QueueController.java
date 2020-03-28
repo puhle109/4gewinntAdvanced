@@ -58,8 +58,24 @@ public class QueueController {
   private Chip generateNewChip() {
     Chip chip = new Chip();
 
-    // TODO: hier muss nun anhand der Wahrscheinlichkeit ein Tp ermittelt werden
     ChipType chipType = null;
+
+    //Chiptyp ermitteln (mega unschoen derzeit)
+    double r = Math.random();
+
+    if (r<=0.6) {
+      chipType = ChipType.SIMPLE;
+    } else {
+      if (r <= 0.7) {
+        chipType = ChipType.BOMB;
+      } else if (r <= 0.8) {
+        chipType = ChipType.COLOR;
+      } else if (r <= 0.9) {
+        chipType = ChipType.TABLE_FLIP;
+      } else {
+        chipType = ChipType.SWITCH;
+      }
+    }
 
     chip.setChipType(chipType);
 
