@@ -79,17 +79,22 @@ public class App extends Application {
         inputView.setDefaultImage();
       });
       inputView.setOnMouseClicked(mouseEvent -> {
-        // Wenn kein Chip ausgewählt wurde
-        if(activePlayer.getChoosenChip() == null){
-          return;
-        }
-        gameController.useChip(inputView.getColumn());
-        checkWin();
-        fillMainPane();
-        fillQueuePane();
+        clickUseChip(inputView.getColumn());
       });
       inputPane.add(inputView, colNumber, 0);
     }
+  }
+
+  private void clickUseChip(int column) {
+    Player activePlayer = gameController.getActivePlayer();
+    // Wenn kein Chip ausgewählt wurde
+    if(activePlayer.getChoosenChip() == null){
+      return;
+    }
+    gameController.useChip(column);
+    checkWin();
+    fillMainPane();
+    fillQueuePane();
   }
 
   private void checkWin(){
@@ -101,12 +106,16 @@ public class App extends Application {
     switch (winner){
       case RED:
         text = "Spieler Rot hat's gerockt!";
+        break;
       case BLUE:
         text = "Spieler Blau hat's gerockt!";
+        break;
       case BOTH:
         text = "Oh no! Unentschieden...";
+        break;
       case DRAW:
         text = "Ihr habt's beide verkackt...";
+        break;
       case NONE:
         return;
     }
@@ -132,7 +141,10 @@ public class App extends Application {
       LinkedList<ChipView> column = grid.getChips().get(colNumber);
       int gridRowNumber = 0;
       for (int rowNumber = column.size()-1; rowNumber >= 0; rowNumber--) {
-        mainPane.add(column.get(rowNumber), colNumber, gridRowNumber++);
+        ChipView chipView = column.get(rowNumber);
+        int finalColNumber = colNumber;
+        chipView.setOnMouseClicked(mouseEvent -> clickUseChip(finalColNumber));
+        mainPane.add(chipView, colNumber, gridRowNumber++);
       }
     }
   }
