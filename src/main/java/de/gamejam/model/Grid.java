@@ -74,11 +74,58 @@ public class Grid {
         return false;
     }
 
-  /*
-  private boolean checkHorizontal(int row, int col){ };
-  private boolean checkVertical(int row, int col){  };
-  private boolean checkDiagonal(int row, int col){  };
-*/
+
+    private int checkHorizontal(int row, int col, int winSize, ChipColor color) {
+        int checkWin = 1;
+
+        for (int k = 0; k < winSize; k++) {
+            if (color != getChipViewAt(row + k, col).getColor()) {
+                break;
+            }
+            checkWin++;
+        }
+        return checkWin;
+    }
+
+    private int checkVertical(int row, int col, int winSize, ChipColor color) {
+        int checkWin = 1;
+        for (int k = 0; k < winSize; k++) {
+            if (color != getChipViewAt(row, col + k).getColor()) {
+                break;
+            }
+            checkWin++;
+        }
+        return checkWin;
+    }
+
+    ;
+
+    private int checkDiagonal(int row, int col, int winSize, ChipColor color) {
+      int checkWin = 1;
+
+      for (int k = 0; k < winSize; k++) {
+        if (color != getChipViewAt(row + k, col + k).getColor()) {
+          break;
+        }
+        checkWin++;
+      }
+
+      if (checkWin==winSize) {
+        return checkWin;
+      } else {
+        checkWin = 1;
+
+        for (int k = 0; k < winSize; k++) {
+          if (color != getChipViewAt(row + k, col - k).getColor()) {
+            break;
+          }
+          checkWin++;
+        }
+
+        return checkWin;
+      }
+
+    }
 
     private Winner getWin(int check, int size, ChipColor color) {
         if (check == size) {
@@ -114,16 +161,8 @@ public class Grid {
 
                         color = getChipViewAt(i, j).getColor();
 
-                        //reihe prüfen
-                        int checkWin = 1;
-                        for (int k = 0; k < winSize; k++) {
-                            if (color != getChipViewAt(i + k, j).getColor()) {
-                                break;
-                            }
-                            checkWin++;
-                        }
                         //falls jemand gewonnen hat, prüfen wer
-                        tempWin = getWin(checkWin, winSize, color);
+                        tempWin = getWin(checkHorizontal(i, j, winSize, color), winSize, color);
 
                         if (endWin == Winner.NONE) {
                             endWin = tempWin;
@@ -132,15 +171,7 @@ public class Grid {
                         }
 
                         //spalte prüfen
-                        checkWin = 1;
-                        for (int k = 0; k < winSize; k++) {
-                            if (color != getChipViewAt(i, j+k).getColor()) {
-                                break;
-                            }
-                            checkWin++;
-                        }
-
-                        tempWin = getWin(checkWin, winSize, color);
+                        tempWin = getWin(checkVertical(i, j, winSize, color), winSize, color);
 
                         if (endWin == Winner.NONE) {
                             endWin = tempWin;
@@ -148,9 +179,14 @@ public class Grid {
                             return Winner.BOTH;
                         }
 
-                        //TODO: diagonalen prüfen
+                        //diagonale prüfen
+                        tempWin = getWin(checkDiagonal(i, j, winSize, color), winSize, color);
 
-                      //HIER
+                        if (endWin == Winner.NONE) {
+                            endWin = tempWin;
+                        } else if (tempWin != Winner.NONE && tempWin != endWin) {
+                            return Winner.BOTH;
+                        }
 
                     }
 
