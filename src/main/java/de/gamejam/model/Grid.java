@@ -78,8 +78,11 @@ public class Grid {
     private int checkHorizontal(int row, int col, int winSize, ChipColor color) {
         int checkWin = 1;
 
-        for (int k = 0; k < winSize; k++) {
-            if (color != getChipViewAt(row + k, col).getColor()) {
+        for (int k = 1; k < winSize; k++) {
+
+            ChipView chipView = getChipViewAt(row + k, col);
+
+            if (chipView==null || color != chipView.getColor()) {
                 break;
             }
             checkWin++;
@@ -89,8 +92,10 @@ public class Grid {
 
     private int checkVertical(int row, int col, int winSize, ChipColor color) {
         int checkWin = 1;
-        for (int k = 0; k < winSize; k++) {
-            if (color != getChipViewAt(row, col + k).getColor()) {
+
+        for (int k = 1; k < winSize; k++) {
+            ChipView chipView = getChipViewAt(row, col + k);
+            if (chipView==null || color != chipView.getColor()) {
                 break;
             }
             checkWin++;
@@ -98,33 +103,35 @@ public class Grid {
         return checkWin;
     }
 
-    ;
 
     private int checkDiagonal(int row, int col, int winSize, ChipColor color) {
-      int checkWin = 1;
+        int checkWin = 1;
 
-      for (int k = 0; k < winSize; k++) {
-        if (color != getChipViewAt(row + k, col + k).getColor()) {
-          break;
+        for (int k = 1; k < winSize; k++) {
+            ChipView chipView = getChipViewAt(row + k, col + k);
+            if (chipView==null || color != chipView.getColor()) {
+                break;
+            }
+            checkWin++;
         }
-        checkWin++;
-      }
 
-      if (checkWin==winSize) {
+        if (checkWin == winSize) {
+            return checkWin;
+        } else {
+            checkWin = 1;
+            if (col > winSize) {
+                for (int k = 1; k < winSize; k++) {
+                    ChipView chipView = getChipViewAt(row + k, col - k);
+                    if (chipView==null||color != chipView.getColor()) {
+                        break;
+                    }
+                    checkWin++;
+                }
+
+            }
+        }
+
         return checkWin;
-      } else {
-          checkWin = 1;
-          if (col > winSize) {
-              for (int k = 0; k < winSize; k++) {
-                  if (color != getChipViewAt(row + k, col - k).getColor()) {
-                      break;
-                  }
-                  checkWin++;
-              }
-
-              return checkWin;
-          }
-      }
     }
 
     private Winner getWin(int check, int size, ChipColor color) {
