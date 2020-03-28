@@ -13,7 +13,7 @@ public class InputView extends ChipView {
   }
 
   public void setDefaultImage() {
-    this.setImage(new Image(getClass().getResource("/red_simple.png").toExternalForm()));
+    this.setImage(new Image(getClass().getResource("/empty.png").toExternalForm()));
   }
 
   public int getColumn() {
