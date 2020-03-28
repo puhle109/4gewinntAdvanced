@@ -61,6 +61,6 @@ public class GameController {
   }
 
   public Winner checkWin(){
-    return gridController.getGrid().checkWin();
+    return gridController.checkWin();
   }
 }

@@ -26,20 +26,15 @@ public class Grid {
         return fields;
     }
 
-    private int getRows() {
+    public int getRows() {
         return getChips().size();
     }
 
-    ;
-
-    private int getColumns() {
+    public int getColumns() {
         return getChips().get(0).size();
     }
 
-    ;
-
-
-    private ChipView getChipViewAt(int row, int col) {
+    public ChipView getChipViewAt(int row, int col) {
         List<LinkedList<ChipView>> thefield = getChips();
 
         if (row < 0 || col < 0) {
@@ -67,143 +62,6 @@ public class Grid {
             }
         }
         throw new IllegalStateException("Die Spalte ist schon voll!");
-    }
-
-    //TODO:
-    private boolean boardFull() {
-        return false;
-    }
-
-
-    private int checkHorizontal(int row, int col, int winSize, ChipColor color) {
-        int checkWin = 1;
-
-        for (int k = 1; k < winSize; k++) {
-
-            ChipView chipView = getChipViewAt(row + k, col);
-
-            if (chipView==null || color != chipView.getColor()) {
-                break;
-            }
-            checkWin++;
-        }
-        return checkWin;
-    }
-
-    private int checkVertical(int row, int col, int winSize, ChipColor color) {
-        int checkWin = 1;
-
-        for (int k = 1; k < winSize; k++) {
-            ChipView chipView = getChipViewAt(row, col + k);
-            if (chipView==null || color != chipView.getColor()) {
-                break;
-            }
-            checkWin++;
-        }
-        return checkWin;
-    }
-
-
-    private int checkDiagonal(int row, int col, int winSize, ChipColor color) {
-        int checkWin = 1;
-
-        for (int k = 1; k < winSize; k++) {
-            ChipView chipView = getChipViewAt(row + k, col + k);
-            if (chipView==null || color != chipView.getColor()) {
-                break;
-            }
-            checkWin++;
-        }
-
-        if (checkWin == winSize) {
-            return checkWin;
-        } else {
-            checkWin = 1;
-            if (col > winSize) {
-                for (int k = 1; k < winSize; k++) {
-                    ChipView chipView = getChipViewAt(row + k, col - k);
-                    if (chipView==null||color != chipView.getColor()) {
-                        break;
-                    }
-                    checkWin++;
-                }
-
-            }
-        }
-
-        return checkWin;
-    }
-
-    private Winner getWin(int check, int size, ChipColor color) {
-        if (check == size) {
-            return color == ChipColor.RED ? Winner.RED : Winner.BLUE;
-        } else return Winner.NONE;
-    }
-
-    public Winner checkWin() {
-        return checkWin(4);
-    }
-
-    // -1: draw
-    // 0: continue
-    // 1: red wins
-    // 2: blue wins
-    // 3: everybody wins
-    public Winner checkWin(int winSize) {
-        boolean redWins = false;
-        boolean blueWins = false;
-        ChipColor color = null;
-        Winner endWin = Winner.NONE;
-        Winner tempWin = Winner.NONE;
-
-        if (boardFull()) {
-            return Winner.DRAW;
-        } else {
-            //das gesamte Feld prüfen
-            for (int i = 0; i < getRows(); i++) {
-                for (int j = 0; j < getColumns(); j++) {
-
-                    //falls der stein farbig ist
-                    if (getChipViewAt(i, j).getChip() != null) {
-
-                        color = getChipViewAt(i, j).getColor();
-
-                        //falls jemand gewonnen hat, prüfen wer
-                        tempWin = getWin(checkHorizontal(i, j, winSize, color), winSize, color);
-
-                        if (endWin == Winner.NONE) {
-                            endWin = tempWin;
-                        } else if (tempWin != Winner.NONE && tempWin != endWin) {
-                            return Winner.BOTH;
-                        }
-
-                        //spalte prüfen
-                        tempWin = getWin(checkVertical(i, j, winSize, color), winSize, color);
-
-                        if (endWin == Winner.NONE) {
-                            endWin = tempWin;
-                        } else if (tempWin != Winner.NONE && tempWin != endWin) {
-                            return Winner.BOTH;
-                        }
-
-                        //diagonale prüfen
-                        tempWin = getWin(checkDiagonal(i, j, winSize, color), winSize, color);
-
-                        if (endWin == Winner.NONE) {
-                            endWin = tempWin;
-                        } else if (tempWin != Winner.NONE && tempWin != endWin) {
-                            return Winner.BOTH;
-                        }
-
-                    }
-
-
-                }
-
-            }
-        }
-
-        return endWin;
     }
 
 }
