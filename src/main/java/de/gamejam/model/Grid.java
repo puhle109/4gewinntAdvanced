@@ -26,6 +26,21 @@ public class Grid {
     return fields;
   }
 
+  private ChipView getChip(int row, int col){
+    List<LinkedList<ChipView>>  thefield = getChips();
+
+    if (row<0||col<0) { return null; }
+
+    if (row<thefield.size()) {
+      if (col<thefield.get(row).size()) {
+
+       return thefield.get(row).get(col);
+
+      }
+    }
+    return null;
+  }
+
   public void addChip(Chip chip, int x) {
 
     LinkedList<ChipView> col = fields.get(x);
