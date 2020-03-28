@@ -23,7 +23,7 @@ public class ChipView extends ImageView {
       return;
     }
 
-    String filename = chip.getChipType().getFilename();
+    String filename = chip.getImageFilename();
 
     Image image = new Image("/images/" + filename);
     this.setImage(image);

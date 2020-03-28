@@ -3,6 +3,7 @@ package de.gamejam.control;
 import java.util.LinkedList;
 
 import de.gamejam.model.Chip;
+import de.gamejam.model.ChipColor;
 import de.gamejam.model.ChipQueue;
 import de.gamejam.model.ChipType;
 
@@ -10,15 +11,15 @@ public class QueueController {
 
   public static final int QUEUE_SIZE = 4;
 
-  public void initQueue(ChipQueue chipQueue) {
+  public void initQueue(ChipQueue chipQueue, ChipColor color) {
     // Benutzbare Chips auffüllen
     for (int i = 0; i < QUEUE_SIZE; i++) {
-      chipQueue.getUsableChips().add(generateNewChip());
+      chipQueue.getUsableChips().add(generateNewChip(color));
     }
 
     // Nachrückqueue wird aufgefüllt. Hier befinden sich immer
     for (int i = 0; i < 2; i++) {
-      chipQueue.getNextChips().add(generateNewChip());
+      chipQueue.getNextChips().add(generateNewChip(color));
     }
   }
 
@@ -46,7 +47,7 @@ public class QueueController {
 
     // Zwei neu generierte Chip rutscht nach
     for (int i = 0; i < 2; i++) {
-      nextChips.addFirst(generateNewChip());
+      nextChips.addFirst(generateNewChip(chip.getChipColor()));
     }
   }
 
@@ -55,24 +56,25 @@ public class QueueController {
    *
    * @return einen neuen Chip
    */
-  private Chip generateNewChip() {
+  private Chip generateNewChip(ChipColor color) {
     Chip chip = new Chip();
+    chip.setChipColor(color);
 
     //Chiptyp ermitteln (mega unschoen derzeit)
     double r = Math.random();
 
-    ChipType chipType;
-    if (r <= 0.6) {
-      chipType = ChipType.SIMPLE;
-    } else if (r <= 0.7) {
-      chipType = ChipType.BOMB;
-    } else if (r <= 0.8) {
-      chipType = ChipType.COLOR;
-    } else if (r <= 0.9) {
-      chipType = ChipType.TABLE_FLIP;
-    } else {
-      chipType = ChipType.SWITCH;
-    }
+    ChipType chipType = ChipType.SIMPLE;
+//    if (r <= 0.6) {
+//      chipType = ChipType.SIMPLE;
+//    } else if (r <= 0.7) {
+//      chipType = ChipType.BOMB;
+//    } else if (r <= 0.8) {
+//      chipType = ChipType.COLOR;
+//    } else if (r <= 0.9) {
+//      chipType = ChipType.TABLE_FLIP;
+//    } else {
+//      chipType = ChipType.SWITCH;
+//    }
 
     chip.setChipType(chipType);
 
