@@ -7,19 +7,33 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
-public class ChipView extends ImageView {
+public class ChipView extends BorderPane {
 
   public static final int IMAGE_SIZE = 50;
   private Chip chip;
   private PathTransition animation;
+  private ImageView imageView;
 
   public ChipView() {
     super();
-    this.setFitHeight(IMAGE_SIZE);
-    this.setFitWidth(IMAGE_SIZE);
+    imageView = new ImageView();
+    imageView.setFitHeight(IMAGE_SIZE);
+    imageView.setFitWidth(IMAGE_SIZE);
+//    Image image = new Image(getClass().getResource("/empty.png").toExternalForm());
+//    imageView.setImage(image);
+    this.setBorder(new Border(new BorderStroke(Color.BLACK,
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+    this.setCenter(imageView);
   }
 
   public Chip getChip() {
@@ -31,13 +45,13 @@ public class ChipView extends ImageView {
 
     // Wenn der Chip entfernt wurde, soll nur das Bild
     if (chip == null) {
-      this.setImage(null);
+      imageView.setImage(null);
       return;
     }
 
     String filename = chip.getImageFilename();
     Image image = new Image(getClass().getResource("/" + filename).toExternalForm());
-    this.setImage(image);
+    imageView.setImage(image);
   }
 
   public ChipColor getColor() {
@@ -55,12 +69,12 @@ public class ChipView extends ImageView {
   public void setSelected() {
     animation = new PathTransition();
     animation.setCycleCount(Timeline.INDEFINITE);
-    animation.setNode(this);
+    animation.setNode(imageView);
     Line shape = new Line();
-    shape.setStartX(this.getX() + (IMAGE_SIZE/2));
-    shape.setStartY(this.getY() + (IMAGE_SIZE/2));
-    shape.setEndX(this.getX() + (IMAGE_SIZE/2));
-    shape.setEndY(this.getY() + (IMAGE_SIZE/2) - 10);
+    shape.setStartX(imageView.getX() + (IMAGE_SIZE/2));
+    shape.setStartY(imageView.getY() + (IMAGE_SIZE/2));
+    shape.setEndX(imageView.getX() + (IMAGE_SIZE/2));
+    shape.setEndY(imageView.getY() + (IMAGE_SIZE/2) - 10);
     animation.setPath(shape);
     animation.setAutoReverse(true);
     animation.setDelay(Duration.millis(100));
