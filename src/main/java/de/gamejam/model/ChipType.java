@@ -16,7 +16,8 @@ public enum ChipType {
   //static oder surround effekt
   PROTECT("protect.png", 0.00),
   OIL("oil.png", 0.00),
-  WALL("wall.png", 0.00);
+  WALL("wall.png", 0.00),
+  TUTOR("tutor.png", 0.00);
 
 
   private String filename;
