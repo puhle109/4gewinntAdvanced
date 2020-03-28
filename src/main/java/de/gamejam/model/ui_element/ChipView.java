@@ -21,16 +21,14 @@ public class ChipView extends BorderPane {
 
   public static final int IMAGE_SIZE = 50;
   private Chip chip;
-  private PathTransition animation;
-  private ImageView imageView;
+
+  protected ImageView imageView;
 
   public ChipView() {
     super();
     imageView = new ImageView();
     imageView.setFitHeight(IMAGE_SIZE);
     imageView.setFitWidth(IMAGE_SIZE);
-//    Image image = new Image(getClass().getResource("/empty.png").toExternalForm());
-//    imageView.setImage(image);
     this.setBorder(new Border(new BorderStroke(Color.BLACK,
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     this.setCenter(imageView);
@@ -66,24 +64,5 @@ public class ChipView extends BorderPane {
     return getChip() == null;
   }
 
-  public void setSelected() {
-    animation = new PathTransition();
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.setNode(imageView);
-    Line shape = new Line();
-    shape.setStartX(imageView.getX() + (IMAGE_SIZE/2));
-    shape.setStartY(imageView.getY() + (IMAGE_SIZE/2));
-    shape.setEndX(imageView.getX() + (IMAGE_SIZE/2));
-    shape.setEndY(imageView.getY() + (IMAGE_SIZE/2) - 10);
-    animation.setPath(shape);
-    animation.setAutoReverse(true);
-    animation.setDelay(Duration.millis(100));
-    animation.play();
-  }
 
-  public void setUnselected(){
-    if (animation != null){
-      // TODO: 28.03.2020 anhalten...
-    }
-  }
 }
