@@ -119,7 +119,7 @@ public class App extends Application {
         text = "Spieler Blau hat's gerockt!";
         break;
       case BOTH:
-        text = "Oh no! Unentschieden...";
+        text = "Jeder gewinnt!";
         break;
       case DRAW:
         text = "Ihr habt's beide verkackt...";
