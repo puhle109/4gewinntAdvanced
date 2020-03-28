@@ -24,8 +24,13 @@ public class ChipView extends BorderPane {
   private PathTransition animation;
   private ImageView imageView;
 
-  public ChipView() {
+  private int row;
+  private int col;
+
+  public ChipView(int row,int col) {
     super();
+    this.row=row;
+    this.col=col;
     imageView = new ImageView();
     imageView.setFitHeight(IMAGE_SIZE);
     imageView.setFitWidth(IMAGE_SIZE);
@@ -34,6 +39,14 @@ public class ChipView extends BorderPane {
     this.setBorder(new Border(new BorderStroke(Color.BLACK,
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     this.setCenter(imageView);
+  }
+
+  public int getRow(){
+    return this.row;
+  }
+
+  public int getCol(){
+    return this.col;
   }
 
   public Chip getChip() {

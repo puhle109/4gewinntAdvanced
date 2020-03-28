@@ -6,6 +6,7 @@ import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.Player;
 import de.gamejam.model.Winner;
+import de.gamejam.model.ui_element.ChipView;
 
 public class GameController {
 
@@ -55,7 +56,10 @@ public class GameController {
     }
 
     Chip chip = activePlayer.getChoosenChip().getChip();
-    gridController.getGrid().addChip(chip, column);
+    ChipView chipView = gridController.getGrid().addChip(chip, column);
+
+    gridController.useSpecial(chipView);
+
     queueController.useChip(activePlayer.getChipQueue(), chip);
     changePlayer();
   }

@@ -16,7 +16,7 @@ public class Grid {
         for (int x = 0; x < countCol; x++) {
             LinkedList<ChipView> col = new LinkedList<>();
             for (int y = 0; y < countRow; y++) {
-                col.add(new ChipView());
+                col.add(new ChipView(y, x));
             }
             fields.add(col);
         }
@@ -51,14 +51,14 @@ public class Grid {
         return null;
     }
 
-    public void addChip(Chip chip, int x) {
+    public ChipView addChip(Chip chip, int x) {
 
         LinkedList<ChipView> col = fields.get(x);
 
         for (ChipView chipView : col) {
             if (chipView.isFree()) {
                 chipView.setChip(chip);
-                return;
+                return chipView;
             }
         }
         throw new IllegalStateException("Die Spalte ist schon voll!");

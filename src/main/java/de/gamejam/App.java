@@ -92,12 +92,12 @@ public class App extends Application {
       return;
     }
     gameController.useChip(column);
-    checkWin();
+    showWin();
     fillMainPane();
     fillQueuePane();
   }
 
-  private void checkWin(){
+  private void showWin(){
 
     Winner winner = gameController.checkWin();
 

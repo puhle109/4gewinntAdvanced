@@ -1,8 +1,6 @@
 package de.gamejam.control;
 
-import de.gamejam.model.ChipColor;
-import de.gamejam.model.Grid;
-import de.gamejam.model.Winner;
+import de.gamejam.model.*;
 import de.gamejam.model.ui_element.ChipView;
 
 import java.util.LinkedList;
@@ -160,5 +158,37 @@ public class GridController {
         return endWin;
     }
 
+    public void useSpecial(ChipView chipView) {
+        if (chipView.getChip().getChipType() == ChipType.SIMPLE) {
+            return;
+        }
+
+        if (chipView.getChip().getChipType() == ChipType.SWITCH) {
+            skillSwitch(chipView);
+
+        } else if (chipView.getChip().getChipType() == ChipType.BOMB) {
+            skillBomb();
+
+        }
+    }
+
+    private void skillSwitch(ChipView chipView){
+        int row = chipView.getRow();
+        int col = chipView.getCol();
+
+        ChipView left = getGrid().getChipViewAt(row-1, col);
+        ChipView right = getGrid().getChipViewAt(row+1, col);
+        Chip tmp = left.getChip();
+
+        if (left!=null&&right!=null){
+            left.setChip(right.getChip());
+            right.setChip(tmp);
+        }
+
+    }
+
+    private void skillBomb(){
+
+    }
 
 }
