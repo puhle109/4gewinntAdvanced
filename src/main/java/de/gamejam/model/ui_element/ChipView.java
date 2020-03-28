@@ -12,12 +12,13 @@ import javafx.util.Duration;
 
 public class ChipView extends ImageView {
 
+  public static final int IMAGE_SIZE = 50;
   private Chip chip;
 
   public ChipView() {
     super();
-    this.setFitHeight(50);
-    this.setFitWidth(50);
+    this.setFitHeight(IMAGE_SIZE);
+    this.setFitWidth(IMAGE_SIZE);
   }
 
   public Chip getChip() {
@@ -34,8 +35,6 @@ public class ChipView extends ImageView {
     }
 
     String filename = chip.getImageFilename();
-//    Image image = new Image(getClass().getResource("/images/" + filename).getFile());
-//    Image image = new Image("resource/images/" + filename);
     Image image = new Image(getClass().getResource("/" + filename).toExternalForm());
     this.setImage(image);
   }
@@ -57,12 +56,13 @@ public class ChipView extends ImageView {
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.setNode(this);
     Line shape = new Line();
-    shape.setStartX(this.getX());
-    shape.setStartY(this.getY());
-    shape.setEndX(this.getX());
-    shape.setEndY(this.getY() + 10);
+    shape.setStartX(this.getX() + (IMAGE_SIZE/2));
+    shape.setStartY(this.getY() + (IMAGE_SIZE/2));
+    shape.setEndX(this.getX() + (IMAGE_SIZE/2));
+    shape.setEndY(this.getY() + (IMAGE_SIZE/2) - 10);
     animation.setPath(shape);
     animation.setAutoReverse(true);
     animation.setDelay(Duration.millis(100));
+    animation.play();
   }
 }
