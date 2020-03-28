@@ -68,6 +68,8 @@ public class ChipView extends ImageView {
   }
 
   public void setUnselected(){
-    animation.stop();
+    if (animation != null){
+      // TODO: 28.03.2020 anhalten...
+    }
   }
 }

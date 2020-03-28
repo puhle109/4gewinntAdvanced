@@ -2,6 +2,7 @@ package de.gamejam.control;
 
 import java.util.LinkedList;
 
+import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.Player;
 
@@ -36,12 +37,25 @@ public class GameController {
     return gridController;
   }
 
-  public void changePlayer(){
+  private void changePlayer(){
     // Der vorderste Spieler wird hinten angehangen
     players.addLast(players.removeFirst());
   }
 
   public Player getActivePlayer() {
     return players.getFirst();
+  }
+
+  public void useChip(int column) {
+    Player activePlayer = getActivePlayer();
+
+    if (activePlayer.getChoosenChip() == null){
+      return;
+    }
+
+    Chip chip = activePlayer.getChoosenChip().getChip();
+    gridController.getGrid().addChip(chip, column);
+    queueController.useChip(activePlayer.getChipQueue(), chip);
+    changePlayer();
   }
 }

@@ -12,6 +12,7 @@ import de.gamejam.model.ui_element.ChipView;
 import de.gamejam.model.ui_element.InputView;
 
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -22,6 +23,8 @@ public class App extends Application {
   private static Scene scene;
 
   private GameController gameController = new GameController();
+  private GridPane mainPane;
+  private GridPane chipQueuePane;
 
   public static void main(String[] args) {
     launch();
@@ -35,11 +38,11 @@ public class App extends Application {
 
     BorderPane root = new BorderPane();
 
-    GridPane chipQueuePane = new GridPane();
-    fillQueuePane(chipQueuePane);
+    chipQueuePane = new GridPane();
+    fillQueuePane();
 
-    GridPane mainPane = new GridPane();
-    fillMainPane(mainPane);
+    mainPane = new GridPane();
+    fillMainPane();
 
     GridPane inputPane = new GridPane();
     fillInputPane(inputPane);
@@ -55,25 +58,53 @@ public class App extends Application {
 
   private void fillInputPane(GridPane inputPane) {
     Grid grid = gameController.getGridController().getGrid();
-
+    Player activePlayer = gameController.getActivePlayer();
+    inputPane.setGridLinesVisible(true);
     for (int colNumber = 0; colNumber < grid.getChips().size(); colNumber++) {
-      inputPane.add(new InputView(), colNumber, 0);
+      final InputView inputView = new InputView(colNumber);
+      inputView.setCursor(Cursor.CLOSED_HAND);
+      inputView.setOnMouseEntered(mouseEvent -> {
+        if(activePlayer.getChoosenChip() != null){
+          inputView.setChip(activePlayer.getChoosenChip().getChip());
+        }
+      });
+      inputView.setOnMouseExited(mouseEvent -> {
+        inputView.setChip(null);
+        inputView.setDefaultImage();
+      });
+      inputView.setOnMouseClicked(mouseEvent -> {
+        // Wenn kein Chip ausgewählt wurde
+        if(activePlayer.getChoosenChip() == null){
+          return;
+        }
+        gameController.useChip(inputView.getColumn());
+        fillMainPane();
+        fillQueuePane();
+      });
+      inputPane.add(inputView, colNumber, 0);
     }
   }
 
-  private void fillMainPane(GridPane mainPane) {
-      mainPane.setGridLinesVisible(true);
+  private void fillMainPane() {
+    // Aufräumen...
+    mainPane.getChildren().clear();
+
+    mainPane.setGridLinesVisible(true);
     Grid grid = gameController.getGridController().getGrid();
 
     for (int colNumber = 0; colNumber < grid.getChips().size(); colNumber++) {
       LinkedList<ChipView> column = grid.getChips().get(colNumber);
-      for (int rowNumber = 0; rowNumber < column.size(); rowNumber++) {
-        mainPane.add(column.get(rowNumber), colNumber, rowNumber);
+      int gridRowNumber = 0;
+      for (int rowNumber = column.size()-1; rowNumber >= 0; rowNumber--) {
+        mainPane.add(column.get(rowNumber), colNumber, gridRowNumber++);
       }
     }
   }
 
-  private void fillQueuePane(GridPane queuePane) {
+  private void fillQueuePane() {
+    // Aufräumen
+    chipQueuePane.getChildren().clear();
+
     Player player = gameController.getActivePlayer();
 
     int colCount = 0;
@@ -82,26 +113,32 @@ public class App extends Application {
       ChipView chipView = new ChipView();
       chipView.setOpacity(.5);
       chipView.setChip(chip);
-      queuePane.add(chipView, colCount, 0);
+      chipQueuePane.add(chipView, colCount, 0);
       colCount++;
     }
 
     // Verwendbare Chips anfügen
     for (Chip chip : player.getChipQueue().getUsableChips()) {
       final ChipView chipView = new ChipView();
+
       chipView.setOnMouseClicked(mouseEvent -> {
-
         player.setChoosenChip(chipView);
-
         //alle unselected
-//        queuePane.getChildren()
-
+        setChipUnselected(chipQueuePane);
         // ausgewählen selecten
         chipView.setSelected();
       });
       chipView.setChip(chip);
-      queuePane.add(chipView, colCount, 0);
+      chipQueuePane.add(chipView, colCount, 0);
       colCount++;
     }
+  }
+
+  private void setChipUnselected(GridPane queuePane) {
+    queuePane.getChildren().stream().forEach(node -> {
+      if (node instanceof ChipView) {
+        ((ChipView) node).setUnselected();
+      }
+    });
   }
 }
