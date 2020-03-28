@@ -8,6 +8,7 @@ import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.Grid;
 import de.gamejam.model.Player;
+import de.gamejam.model.Winner;
 import de.gamejam.model.ui_element.ChipView;
 import de.gamejam.model.ui_element.InputView;
 
@@ -16,6 +17,9 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -25,6 +29,7 @@ public class App extends Application {
   private GameController gameController = new GameController();
   private GridPane mainPane;
   private GridPane chipQueuePane;
+  private Stage stage;
 
   public static void main(String[] args) {
     launch();
@@ -32,6 +37,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
+    this.stage = stage;
     stage.setTitle("Super tolles Spiel");
     gameController.createPlayer(ChipColor.BLUE);
     gameController.createPlayer(ChipColor.RED);
@@ -78,11 +84,41 @@ public class App extends Application {
           return;
         }
         gameController.useChip(inputView.getColumn());
+        checkWin();
         fillMainPane();
         fillQueuePane();
       });
       inputPane.add(inputView, colNumber, 0);
     }
+  }
+
+  private void checkWin(){
+
+    Winner winner = gameController.checkWin();
+
+    String text = null;
+
+    switch (winner){
+      case RED:
+        text = "Spieler Rot hat's gerockt!";
+      case BLUE:
+        text = "Spieler Blau hat's gerockt!";
+      case BOTH:
+        text = "Oh no! Unentschieden...";
+      case DRAW:
+        text = "Ihr habt's beide verkackt...";
+      case NONE:
+        return;
+    }
+
+    final Stage dialog = new Stage();
+    dialog.initModality(Modality.APPLICATION_MODAL);
+    dialog.initOwner(this.stage);
+    VBox dialogVbox = new VBox(20);
+    dialogVbox.getChildren().add(new Text(text));
+    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+    dialog.setScene(dialogScene);
+    dialog.show();
   }
 
   private void fillMainPane() {

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.Player;
+import de.gamejam.model.Winner;
 
 public class GameController {
 
@@ -57,5 +58,9 @@ public class GameController {
     gridController.getGrid().addChip(chip, column);
     queueController.useChip(activePlayer.getChipQueue(), chip);
     changePlayer();
+  }
+
+  public Winner checkWin(){
+    return gridController.getGrid().checkWin();
   }
 }
