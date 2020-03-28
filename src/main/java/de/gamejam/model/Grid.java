@@ -113,18 +113,18 @@ public class Grid {
       if (checkWin==winSize) {
         return checkWin;
       } else {
-        checkWin = 1;
+          checkWin = 1;
+          if (col > winSize) {
+              for (int k = 0; k < winSize; k++) {
+                  if (color != getChipViewAt(row + k, col - k).getColor()) {
+                      break;
+                  }
+                  checkWin++;
+              }
 
-        for (int k = 0; k < winSize; k++) {
-          if (color != getChipViewAt(row + k, col - k).getColor()) {
-            break;
+              return checkWin;
           }
-          checkWin++;
-        }
-
-        return checkWin;
       }
-
     }
 
     private Winner getWin(int check, int size, ChipColor color) {
