@@ -1,10 +1,13 @@
 package de.gamejam.model;
 
+import de.gamejam.model.ui_element.ChipView;
+
 public class Player {
 
   private ChipQueue chipQueue;
   private int lifePoint;
   private ChipColor chipColor;
+  private ChipView choosenChip;
 
   public Player(ChipColor chipColor) {
     this.chipColor = chipColor;
@@ -22,5 +25,13 @@ public class Player {
 
   public ChipColor getColor() {
     return chipColor;
+  }
+
+  public ChipView getChoosenChip() {
+    return choosenChip;
+  }
+
+  public void setChoosenChip(ChipView choosenChip) {
+    this.choosenChip = choosenChip;
   }
 }

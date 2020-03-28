@@ -7,8 +7,10 @@ public class GridController {
   private final Grid grid;
 
   public GridController() {
-    grid = new Grid(9,7);
+    grid = new Grid(7,9);
   }
 
-
+  public Grid getGrid() {
+    return grid;
+  }
 }
