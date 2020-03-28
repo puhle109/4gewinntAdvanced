@@ -58,23 +58,20 @@ public class QueueController {
   private Chip generateNewChip() {
     Chip chip = new Chip();
 
-    ChipType chipType = null;
-
     //Chiptyp ermitteln (mega unschoen derzeit)
     double r = Math.random();
 
-    if (r<=0.6) {
+    ChipType chipType;
+    if (r <= 0.6) {
       chipType = ChipType.SIMPLE;
+    } else if (r <= 0.7) {
+      chipType = ChipType.BOMB;
+    } else if (r <= 0.8) {
+      chipType = ChipType.COLOR;
+    } else if (r <= 0.9) {
+      chipType = ChipType.TABLE_FLIP;
     } else {
-      if (r <= 0.7) {
-        chipType = ChipType.BOMB;
-      } else if (r <= 0.8) {
-        chipType = ChipType.COLOR;
-      } else if (r <= 0.9) {
-        chipType = ChipType.TABLE_FLIP;
-      } else {
-        chipType = ChipType.SWITCH;
-      }
+      chipType = ChipType.SWITCH;
     }
 
     chip.setChipType(chipType);
