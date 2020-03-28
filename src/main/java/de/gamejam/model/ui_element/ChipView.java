@@ -1,8 +1,8 @@
 package de.gamejam.model.ui_element;
 
 import de.gamejam.model.Chip;
+import de.gamejam.model.ChipColor;
 
-import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -38,6 +38,14 @@ public class ChipView extends ImageView {
 //    Image image = new Image("resource/images/" + filename);
     Image image = new Image(getClass().getResource("/" + filename).toExternalForm());
     this.setImage(image);
+  }
+
+  public ChipColor getColor() {
+    if (chip == null) {
+      return null;
+    } else {
+      return chip.getChipColor();
+    }
   }
 
   public boolean isFree() {
