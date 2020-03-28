@@ -1,15 +1,15 @@
 package de.gamejam.control;
 
 import java.util.LinkedList;
-import java.util.List;
 
+import de.gamejam.model.ChipColor;
 import de.gamejam.model.Player;
 
 public class GameController {
 
   private final QueueController queueController;
   private final GridController gridController;
-  private final List<Player> players;
+  private final LinkedList<Player> players;
 
 
   public GameController() {
@@ -18,13 +18,30 @@ public class GameController {
     players = new LinkedList<>();
   }
 
-  public void createPlayer(String name){
-    Player player = new Player(name);
+  public void createPlayer(ChipColor chipColor){
+    Player player = new Player(chipColor);
 
     // Die ChipQueue des Spieler auffüllen
-    queueController.initQueue(player.getChipQueue());
+    queueController.initQueue(player.getChipQueue(), player.getColor());
 
     // Den Spieler zum Spiel hinzufügen
     players.add(player);
+  }
+
+  public QueueController getQueueController() {
+    return queueController;
+  }
+
+  public GridController getGridController() {
+    return gridController;
+  }
+
+  public void changePlayer(){
+    // Der vorderste Spieler wird hinten angehangen
+    players.addLast(players.removeFirst());
+  }
+
+  public Player getActivePlayer() {
+    return players.getFirst();
   }
 }

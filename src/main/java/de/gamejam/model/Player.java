@@ -2,22 +2,14 @@ package de.gamejam.model;
 
 public class Player {
 
-  private String name;
   private ChipQueue chipQueue;
   private int lifePoint;
+  private ChipColor chipColor;
 
-  public Player(String name) {
-    this.name = name;
+  public Player(ChipColor chipColor) {
+    this.chipColor = chipColor;
     lifePoint = 3;
     chipQueue = new ChipQueue();
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public ChipQueue getChipQueue() {
@@ -26,5 +18,9 @@ public class Player {
 
   public void setChipQueue(ChipQueue chipQueue) {
     this.chipQueue = chipQueue;
+  }
+
+  public ChipColor getColor() {
+    return chipColor;
   }
 }
