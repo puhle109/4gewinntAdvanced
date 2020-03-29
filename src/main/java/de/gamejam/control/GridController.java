@@ -102,7 +102,6 @@ public class GridController {
     public Winner checkWin() {
         return checkWin(4);
     }
-<<<<<<< HEAD
 
     public Winner checkWin(int winSize) {
         boolean redWins = false;
@@ -153,9 +152,6 @@ public class GridController {
                 }
             }
         }
-=======
-  }
->>>>>>> b20c57a86d06a1e4f36ad0c584c1acbde8869f36
 
         return endWin;
     }
@@ -192,8 +188,8 @@ public class GridController {
         ChipView right = getGrid().getChipViewAt(row + 1, col);
 
         if (left != null && right != null) {
-          if  (left.getChip()==null || (left.getChip() != null && left.getChip().isNotProtected())
-                    && (right.getChip()==null||right.getChip() != null && right.getChip().isNotProtected())){
+            if (left.getChip() == null || (left.getChip() != null && left.getChip().isNotProtected())
+                    && (right.getChip() == null || right.getChip() != null && right.getChip().isNotProtected())) {
                 Chip tmp = left.getChip();
                 left.setChip(right.getChip());
                 right.setChip(tmp);
