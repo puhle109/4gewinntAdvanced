@@ -16,8 +16,8 @@ public class GridController {
   private final Grid grid;
   private final SoundMachine soundMachine;
 
-  public GridController() {
-    grid = new Grid(7, 9);
+  public GridController(int rows, int cols){
+    grid = new Grid(rows, cols);
     soundMachine = new SoundMachine();
   }
 

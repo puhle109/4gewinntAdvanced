@@ -14,11 +14,20 @@ public class GameController {
   private final QueueController queueController;
   private final GridController gridController;
   private final LinkedList<Player> players;
+  private static final int ROWCOUNT  = 7;
+  private static final int COLCOUNT  = 9;
 
   public GameController() {
     queueController = new QueueController();
-    gridController = new GridController();
+    gridController = new GridController(ROWCOUNT, COLCOUNT);
     players = new LinkedList<>();
+  }
+
+  public void resetGame(){
+    getGridController().getGrid().init(ROWCOUNT, COLCOUNT);
+    for (Player player:players) {
+      queueController.initQueue(player.getChipQueue(), player.getColor());
+    }
   }
 
   public void createPlayer(ChipColor chipColor){
