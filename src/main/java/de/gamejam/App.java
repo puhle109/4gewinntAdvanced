@@ -15,6 +15,7 @@ import de.gamejam.model.ui_element.InputView;
 import de.gamejam.model.ui_element.SelectableChipView;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -72,7 +73,7 @@ public class App extends Application {
     root.setCenter(mainPane);
 
     Pane explainBoard = createExplainBoard();
-                                                //(top, right, bottom, left)
+    //(top, right, bottom, left)
     BorderPane.setMargin(explainBoard, new Insets(10, 5, 10, 10));
     root.setLeft(explainBoard);
     scene = new Scene(root);
@@ -100,7 +101,7 @@ public class App extends Application {
         inputView.setChip(null);
       });
       inputView.setOnMouseClicked(mouseEvent -> {
-        clickUseChip(inputView.getColumn());
+          clickUseChip(inputView.getColumn());
       });
       inputPane.add(inputView, colNumber, 0);
     }
@@ -132,10 +133,35 @@ public class App extends Application {
     if (activePlayer.getChoosenChip() == null) {
       return;
     }
-    gameController.useChip(column);
-    showWin();
+    ChipView usedChipView = gameController.useChip(column);
     fillGridPane();
     fillQueuePane();
+
+    Platform.runLater(() -> {
+      // ein wenig warten
+      sleep(500);
+      gameController.useSpecial(usedChipView);
+      fillGridPane();
+
+      Platform.runLater(() -> {
+        sleep(500);
+        gameController.gravity();
+        fillGridPane();
+
+        gameController.changePlayer();
+        fillQueuePane();
+
+        showWin();
+      });
+
+    });
+  }
+
+  private void sleep(int milliSeconds) {
+    try {
+      Thread.sleep(milliSeconds);
+    } catch (InterruptedException e) {
+    }
   }
 
   private void showWin() {
@@ -187,7 +213,10 @@ public class App extends Application {
       for (int rowNumber = column.size() - 1; rowNumber >= 0; rowNumber--) {
         ChipView chipView = column.get(rowNumber);
         int finalColNumber = colNumber;
-        chipView.setOnMouseClicked(mouseEvent -> clickUseChip(finalColNumber));
+        chipView.setOnMouseClicked(mouseEvent -> {
+                clickUseChip(finalColNumber);
+            }
+        );
         gridPane.add(chipView, colNumber, gridRowNumber++);
       }
     }
