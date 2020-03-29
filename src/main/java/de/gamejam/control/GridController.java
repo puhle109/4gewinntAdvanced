@@ -267,8 +267,7 @@ public class GridController {
         ChipView chipView = chipViews.get(row);
         ChipView nextChipView = chipViews.get(row + 1);
 
-        if (chipView.getChip() == null && nextChipView.getChip() != null
-                && nextChipView.getChip().getChipType()!=ChipType.BALLOON) {
+        if (chipView.getChip() == null && nextChipView.getChip() != null) {
           grid.addChip(nextChipView.getChip(), col);
           nextChipView.setChip(null);
           isGravityUsed = true;

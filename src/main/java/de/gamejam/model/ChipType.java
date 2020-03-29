@@ -15,9 +15,7 @@ public enum ChipType {
 //  CHAOS_COL("chaos_col.png", ""),
 
   //static oder surround effekt
-  PROTECT("protect.png", "Ist geschützt vor allem", Sound.PROTECT),
-  BALLOON("balloon.png", "fliegt", Sound.BALLOON),
-  ;
+  PROTECT("protect.png", "Ist geschützt vor allem", Sound.PROTECT);
 //  OIL("oil.png", ""),
 //  WALL("wall.png", ""),
 //  TUTOR("tutor.png", "");

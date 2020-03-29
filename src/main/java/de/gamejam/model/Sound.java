@@ -8,8 +8,7 @@ public enum Sound {
   LIGHTNING("lightning.mp3"),
   PROTECT("protect.mp3"),
   SWITCH("switch.mp3"),
-  BOMB("bomb.mp3"),
-  BALLOON("balloon.mp3");
+  BOMB("bomb.mp3");
 
   private String filename;
 
