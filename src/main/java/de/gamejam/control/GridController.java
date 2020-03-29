@@ -190,7 +190,8 @@ public class GridController {
     ChipView right = getGrid().getChipViewAt(row + 1, col);
 
     if (left != null && right != null
-        && left.getChip().isNotProtected() && right.getChip().isNotProtected()) {
+        && left.getChip() != null && left.getChip().isNotProtected()
+        && right.getChip() != null && right.getChip().isNotProtected()) {
       Chip tmp = left.getChip();
       left.setChip(right.getChip());
       right.setChip(tmp);
@@ -204,13 +205,13 @@ public class GridController {
     ChipView left = getGrid().getChipViewAt(row - 1, col);
     ChipView right = getGrid().getChipViewAt(row + 1, col);
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (left != null && left.getChip().isNotProtected()) {
+    if (left != null && left.getChip() != null && left.getChip().isNotProtected()) {
       left.setChip(null);
     }
-    if (right != null && right.getChip().isNotProtected()) {
+    if (right != null && right.getChip() != null && right.getChip().isNotProtected()) {
       right.setChip(null);
     }
-    if (down != null && down.getChip().isNotProtected()) {
+    if (down != null && down.getChip() != null && down.getChip().isNotProtected()) {
       down.setChip(null);
     }
     chipView.setChip(null);
@@ -222,7 +223,7 @@ public class GridController {
 
     for (int i = 1; i <= 2; i++) {
       ChipView down = getGrid().getChipViewAt(row, col - i);
-      if (down != null && down.getChip().isNotProtected()) {
+      if (down != null && down.getChip() != null && down.getChip().isNotProtected()) {
         down.setChip(null);
       }
     }
@@ -234,7 +235,7 @@ public class GridController {
     ChipColor color = chipView.getColor();
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null && down.getChip().isNotProtected()) {
+    if (down != null && down.getChip() != null && down.getChip().isNotProtected()) {
       down.getChip().setChipColor(color);
     }
   }
@@ -244,7 +245,7 @@ public class GridController {
     int col = chipView.getCol();
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null && down.getChip().isNotProtected()) {
+    if (down != null && down .getChip() != null && down.getChip().isNotProtected()) {
       Chip tmp = down.getChip();
       down.setChip(chipView.getChip());
       chipView.setChip(tmp);
