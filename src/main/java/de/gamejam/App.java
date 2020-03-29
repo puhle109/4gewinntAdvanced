@@ -136,7 +136,6 @@ public class App extends Application {
     gameController.getGridController().getSoundMachine().playSound(Sound.CLICK);
     gameController.changePlayer();
 
-
     fillQueuePane();
 
     Platform.runLater(() -> {
