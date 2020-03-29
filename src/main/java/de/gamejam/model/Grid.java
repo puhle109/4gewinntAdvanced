@@ -26,12 +26,20 @@ public class Grid {
         return fields;
     }
 
-    public int getRows() {
+    public int getRowSize() {
         return getChips().size();
     }
 
-    public int getColumns() {
+    public int getColumnSize() {
         return getChips().get(0).size();
+    }
+
+    public int getRowCount(){
+        return getChips().get(0).size();
+    }
+
+    public int getColumnCount(){
+        return getChips().size();
     }
 
     public ChipView getChipViewAt(int row, int col) {

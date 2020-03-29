@@ -114,8 +114,8 @@ public class GridController {
       return Winner.DRAW;
     } else {
       //das gesamte Feld prüfen
-      for (int i = 0; i < grid.getRows(); i++) {
-        for (int j = 0; j < grid.getColumns(); j++) {
+      for (int i = 0; i < grid.getRowSize(); i++) {
+        for (int j = 0; j < grid.getColumnSize(); j++) {
 
           //falls der stein farbig ist
           if (grid.getChipViewAt(i, j).getChip() != null) {
@@ -257,15 +257,15 @@ public class GridController {
   public void gravity() {
 
     boolean isGravityUsed = false;
-    for (int col = 0; col < grid.getColumns(); col++) {
+    for (int col = 0; col < grid.getColumnCount(); col++) {
       LinkedList<ChipView> chipViews = grid.getChips().get(col);
 
-      for (int row = 0; row > chipViews.size(); row++) {
+      for (int row = 0; row < chipViews.size() - 1; row++) {
         ChipView chipView = chipViews.get(row);
         ChipView nextChipView = chipViews.get(row + 1);
 
         if (chipView.getChip() == null && nextChipView.getChip() != null) {
-          chipView.setChip(nextChipView.getChip());
+          grid.addChip(nextChipView.getChip(), col);
           nextChipView.setChip(null);
           isGravityUsed = true;
         }
