@@ -256,13 +256,13 @@ public class GridController {
     for (int col = 0; col < grid.getColumns(); col++) {
       LinkedList<ChipView> chipViews = grid.getChips().get(col);
 
-      for (int row = chipViews.size() - 1; row > 0; row--) {
+      for (int row = 0; row > chipViews.size(); row++) {
         ChipView chipView = chipViews.get(row);
-        ChipView nextChipView = chipViews.get(row - 1);
+        ChipView nextChipView = chipViews.get(row + 1);
 
-        if (chipView.getChip() != null && nextChipView.getChip() == null) {
-          nextChipView.setChip(chipView.getChip());
-          chipView.setChip(null);
+        if (chipView.getChip() == null && nextChipView.getChip() != null) {
+          chipView.setChip(nextChipView.getChip());
+          nextChipView.setChip(null);
           isGravityUsed = true;
         }
       }
