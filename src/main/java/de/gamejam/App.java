@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import de.gamejam.control.GameController;
+import de.gamejam.helper.SoundMachine;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.ChipType;
 import de.gamejam.model.Grid;
 import de.gamejam.model.Player;
+import de.gamejam.model.Sound;
 import de.gamejam.model.Winner;
 import de.gamejam.model.ui_element.ChipView;
 import de.gamejam.model.ui_element.InputView;
@@ -26,6 +28,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,6 +51,12 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
+    Media hit = new Media(getClass().getResource("/sound/bomb.mp3" ).toExternalForm());
+    MediaPlayer mediaPlayer = new MediaPlayer(hit);
+    mediaPlayer.setVolume(1.0);
+    mediaPlayer.play();
+
+
     this.stage = stage;
     stage.setTitle("Super tolles Spiel");
     gameController.createPlayer(ChipColor.BLUE);

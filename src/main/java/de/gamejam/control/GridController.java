@@ -3,8 +3,10 @@ package de.gamejam.control;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.gamejam.helper.SoundMachine;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
+import de.gamejam.model.ChipType;
 import de.gamejam.model.Grid;
 import de.gamejam.model.Winner;
 import de.gamejam.model.ui_element.ChipView;
@@ -12,9 +14,11 @@ import de.gamejam.model.ui_element.ChipView;
 public class GridController {
 
   private final Grid grid;
+  private final SoundMachine soundMachine;
 
   public GridController(int rows, int cols){
     grid = new Grid(rows, cols);
+    soundMachine = new SoundMachine();
   }
 
   public Grid getGrid() {
@@ -158,7 +162,8 @@ public class GridController {
 
   public void useSpecial(ChipView chipView) {
 
-    switch (chipView.getChip().getChipType()) {
+    ChipType chipType = chipView.getChip().getChipType();
+    switch (chipType) {
       case SWITCH:
         skillSwitch(chipView);
         break;
@@ -175,6 +180,7 @@ public class GridController {
         skillFlip(chipView);
         break;
     }
+    soundMachine.playSound(chipType.getSound());
   }
 
   private void skillSwitch(ChipView chipView) {

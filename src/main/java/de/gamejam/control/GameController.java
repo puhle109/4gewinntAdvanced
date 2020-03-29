@@ -2,6 +2,7 @@ package de.gamejam.control;
 
 import java.util.LinkedList;
 
+import de.gamejam.helper.SoundMachine;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 import de.gamejam.model.Player;
@@ -15,7 +16,6 @@ public class GameController {
   private final LinkedList<Player> players;
   private static final int ROWCOUNT  = 7;
   private static final int COLCOUNT  = 9;
-
 
   public GameController() {
     queueController = new QueueController();
