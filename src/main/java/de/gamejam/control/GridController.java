@@ -177,9 +177,7 @@ public class GridController {
     }
 
     // Gravity für alle Spalten ausführen
-    for (int i = 0; i < grid.getColumns(); i++) {
-      gravity(i);
-    }
+    gravity();
   }
 
   private void skillSwitch(ChipView chipView) {
@@ -245,7 +243,7 @@ public class GridController {
     int col = chipView.getCol();
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null && down .getChip() != null && down.getChip().isNotProtected()) {
+    if (down != null && down.getChip() != null && down.getChip().isNotProtected()) {
       Chip tmp = down.getChip();
       down.setChip(chipView.getChip());
       chipView.setChip(tmp);
@@ -255,17 +253,26 @@ public class GridController {
   /**
    * alle steine die nicht auf einem stein oder dem boden liegen "fallen" herunter, bis alle liegen
    */
-  public void gravity(int col) {
-    LinkedList<ChipView> chipViews = grid.getChips().get(col);
+  public void gravity() {
 
-    for (int i = chipViews.size() - 1; i > 0 ; i--) {
-      ChipView chipView = chipViews.get(i);
-      ChipView nextChipView = chipViews.get(i - 1);
+    boolean isGravityUsed = false;
+    for (int col = 0; col < grid.getColumns(); col++) {
+      LinkedList<ChipView> chipViews = grid.getChips().get(col);
 
-      if (chipView.getChip() != null && nextChipView.getChip() == null) {
-        nextChipView.setChip(chipView.getChip());
-        chipView.setChip(null);
+      for (int row = chipViews.size() - 1; row > 0; row--) {
+        ChipView chipView = chipViews.get(row);
+        ChipView nextChipView = chipViews.get(row - 1);
+
+        if (chipView.getChip() != null && nextChipView.getChip() == null) {
+          nextChipView.setChip(chipView.getChip());
+          chipView.setChip(null);
+          isGravityUsed = true;
+        }
       }
+    }
+
+    if (isGravityUsed) {
+      // TODO: 29.03.2020 Sound
     }
   }
 }
