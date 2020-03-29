@@ -175,6 +175,9 @@ public class GridController {
         skillFlip(chipView);
         break;
     }
+
+    // Gravity für alle Spalten ausführen
+    gravity();
   }
 
   private void skillSwitch(ChipView chipView) {
@@ -184,12 +187,13 @@ public class GridController {
     ChipView left = getGrid().getChipViewAt(row - 1, col);
     ChipView right = getGrid().getChipViewAt(row + 1, col);
 
-    if (left != null && right != null
-        && left.getChip() != null && left.getChip().isNotProtected()
-        && right.getChip() != null && right.getChip().isNotProtected()) {
-      Chip tmp = left.getChip();
-      left.setChip(right.getChip());
-      right.setChip(tmp);
+    if (left != null && right != null) {
+      if (left.getChip() == null || (left.getChip() != null && left.getChip().isNotProtected())
+          && (right.getChip() == null || right.getChip() != null && right.getChip().isNotProtected())) {
+        Chip tmp = left.getChip();
+        left.setChip(right.getChip());
+        right.setChip(tmp);
+      }
     }
   }
 
@@ -231,7 +235,7 @@ public class GridController {
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
     if (down != null && down.getChip() != null && down.getChip().isNotProtected()) {
-      down.getChip().setChipColor(color);
+      down.setColor(color);
     }
   }
 
@@ -265,11 +269,11 @@ public class GridController {
           nextChipView.setChip(null);
           isGravityUsed = true;
         }
-      }
-    }
 
-    if (isGravityUsed) {
-      // TODO: 29.03.2020 Sound
+        if (isGravityUsed) {
+          // TODO: 29.03.2020 Sound
+        }
+      }
     }
   }
 }

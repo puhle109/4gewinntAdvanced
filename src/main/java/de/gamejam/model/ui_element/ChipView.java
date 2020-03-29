@@ -55,7 +55,7 @@ public class ChipView extends BorderPane {
     }
 
     String filename = chip.getImageFilename();
-    Image image = new Image(getClass().getResource("/" + filename).toExternalForm());
+    Image image = new Image(getClass().getResource("/img/" + filename).toExternalForm());
     imageView.setImage(image);
   }
 
@@ -65,6 +65,17 @@ public class ChipView extends BorderPane {
     } else {
       return chip.getChipColor();
     }
+  }
+
+  public void setColor(ChipColor color){
+    if (this.getChip()!=null){
+      this.getChip().setChipColor(color);
+
+      String filename = chip.getImageFilename();
+      Image image = new Image(getClass().getResource("/img/" + filename).toExternalForm());
+      imageView.setImage(image);
+    }
+
   }
 
   public boolean isFree() {

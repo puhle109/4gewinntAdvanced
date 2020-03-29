@@ -115,7 +115,7 @@ public class App extends Application {
       ChipType chipType = ChipType.values()[i];
       String filename = chipType.getFilename();
       Image image = new Image(
-          getClass().getResource("/" + gameController.getActivePlayer().getColor().getValue() + "_" + filename).toExternalForm());
+          getClass().getResource("/img/" + gameController.getActivePlayer().getColor().getValue() + "_" + filename).toExternalForm());
       ImageView imageView = new ImageView(image);
       imageView.setFitHeight(IMAGE_SIZE);
       imageView.setFitWidth(IMAGE_SIZE);
@@ -135,6 +135,7 @@ public class App extends Application {
     }
     ChipView usedChipView = gameController.useChip(column);
     fillGridPane();
+    gameController.changePlayer();
     fillQueuePane();
 
     Platform.runLater(() -> {
@@ -147,9 +148,6 @@ public class App extends Application {
         sleep(500);
         gameController.gravity();
         fillGridPane();
-
-        gameController.changePlayer();
-        fillQueuePane();
 
         showWin();
       });
