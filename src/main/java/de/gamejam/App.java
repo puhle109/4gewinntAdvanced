@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import de.gamejam.control.GameController;
-import de.gamejam.model.Chip;
-import de.gamejam.model.ChipColor;
-import de.gamejam.model.ChipType;
-import de.gamejam.model.Grid;
-import de.gamejam.model.Player;
-import de.gamejam.model.Winner;
+import de.gamejam.helper.SoundMachine;
+import de.gamejam.model.*;
 import de.gamejam.model.ui_element.ChipView;
 import de.gamejam.model.ui_element.InputView;
 import de.gamejam.model.ui_element.SelectableChipView;
@@ -137,7 +133,10 @@ public class App extends Application {
     }
     ChipView usedChipView = gameController.useChip(column);
     fillGridPane();
+    gameController.getGridController().getSoundMachine().playSound(Sound.CLICK);
     gameController.changePlayer();
+
+
     fillQueuePane();
 
     Platform.runLater(() -> {

@@ -4,11 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.gamejam.helper.SoundMachine;
-import de.gamejam.model.Chip;
-import de.gamejam.model.ChipColor;
-import de.gamejam.model.ChipType;
-import de.gamejam.model.Grid;
-import de.gamejam.model.Winner;
+import de.gamejam.model.*;
 import de.gamejam.model.ui_element.ChipView;
 
 public class GridController {
@@ -23,6 +19,10 @@ public class GridController {
 
   public Grid getGrid() {
     return grid;
+  }
+
+  public SoundMachine getSoundMachine(){
+    return this.soundMachine;
   }
 
   private boolean boardFull() {
@@ -166,21 +166,25 @@ public class GridController {
     switch (chipType) {
       case SWITCH:
         skillSwitch(chipView);
+        soundMachine.playSound(Sound.SWITCH);
         break;
       case BOMB:
         skillBomb(chipView);
+        soundMachine.playSound(Sound.BOMB);
         break;
       case LIGHTNING:
         skillLightning(chipView);
+        soundMachine.playSound(Sound.LIGHTNING);
         break;
       case COLOR:
         skillColor(chipView);
+        soundMachine.playSound(Sound.COLOR);
         break;
       case TABLE_FLIP:
         skillFlip(chipView);
+        soundMachine.playSound(Sound.FLIP);
         break;
     }
-    soundMachine.playSound(chipType.getSound());
   }
 
   private void skillSwitch(ChipView chipView) {
@@ -274,7 +278,7 @@ public class GridController {
         }
 
         if (isGravityUsed) {
-          // TODO: 29.03.2020 Sound
+          soundMachine.playSound(Sound.CLICK);
         }
       }
     }

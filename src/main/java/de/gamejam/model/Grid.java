@@ -69,6 +69,7 @@ public class Grid {
         for (ChipView chipView : col) {
             if (chipView.isFree()) {
                 chipView.setChip(chip);
+
                 return chipView;
             }
         }
