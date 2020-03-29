@@ -102,6 +102,7 @@ public class GridController {
     public Winner checkWin() {
         return checkWin(4);
     }
+<<<<<<< HEAD
 
     public Winner checkWin(int winSize) {
         boolean redWins = false;
@@ -152,6 +153,9 @@ public class GridController {
                 }
             }
         }
+=======
+  }
+>>>>>>> b20c57a86d06a1e4f36ad0c584c1acbde8869f36
 
         return endWin;
     }

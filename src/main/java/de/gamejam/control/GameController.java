@@ -39,7 +39,7 @@ public class GameController {
     return gridController;
   }
 
-  private void changePlayer(){
+  public void changePlayer(){
     // Der vorderste Spieler wird hinten angehangen
     players.addLast(players.removeFirst());
   }
@@ -48,21 +48,28 @@ public class GameController {
     return players.getFirst();
   }
 
-  public void useChip(int column) {
+  public ChipView useChip(int column) {
     Player activePlayer = getActivePlayer();
 
     if (activePlayer.getChoosenChip() == null){
-      return;
+      return null;
     }
 
     Chip chip = activePlayer.getChoosenChip().getChip();
     activePlayer.setChoosenChip(null);
     ChipView chipView = gridController.getGrid().addChip(chip, column);
 
-    gridController.useSpecial(chipView);
-
     queueController.useChip(activePlayer.getChipQueue(), chip);
-    changePlayer();
+
+    return chipView;
+  }
+
+  public void useSpecial(ChipView chipView){
+    gridController.useSpecial(chipView);
+  }
+
+  public void gravity(){
+    gridController.gravity();
   }
 
   public Winner checkWin(){
