@@ -165,19 +165,17 @@ public class GridController {
     }
 
     public void useSpecial(ChipView chipView) {
-        if (chipView.getChip().getChipType() == ChipType.SIMPLE) {
-            return;
-        }
 
-        if (chipView.getChip().getChipType() == ChipType.SWITCH) {
-            skillSwitch(chipView);
-
-        } else if (chipView.getChip().getChipType() == ChipType.BOMB) {
-            skillBomb(chipView);
-
-        } else if (chipView.getChip().getChipType() == ChipType.LIGHTNING) {
-            skillLightning(chipView);
-
+        switch (chipView.getChip().getChipType()){
+            case SWITCH:
+                skillSwitch(chipView);
+                break;
+            case BOMB:
+                skillBomb(chipView);
+                break;
+            case LIGHTNING:
+                skillLightning(chipView);
+                break;
         }
     }
 
