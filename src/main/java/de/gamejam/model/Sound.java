@@ -2,13 +2,13 @@ package de.gamejam.model;
 
 public enum Sound {
   NONE(null),
-  CLICK("click.mp3"),
-  COLOR("color.mp3"),
-  FLIP("flip.mp3"),
-  LIGHTNING("lightning.mp3"),
-  PROTECT("protect.mp3"),
-  SWITCH("switch.mp3"),
-  BOMB("bomb.mp3");
+  CLICK("click.wav"),
+  COLOR("color.wav"),
+  FLIP("flip.wav"),
+  LIGHTNING("lightning.wav"),
+  PROTECT("protect.wav"),
+  SWITCH("switch.wav"),
+  BOMB("bomb.wav");
 
   private String filename;
 

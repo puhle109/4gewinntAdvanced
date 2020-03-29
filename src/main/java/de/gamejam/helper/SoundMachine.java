@@ -24,6 +24,7 @@ public class SoundMachine {
       @Override
       public void run() {
         audioClip.play(100);
+        System.out.println("hi");
       }
     });
   }
