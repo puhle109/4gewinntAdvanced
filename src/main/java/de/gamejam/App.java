@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import de.gamejam.control.GameController;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
+import de.gamejam.model.ChipType;
 import de.gamejam.model.Grid;
 import de.gamejam.model.Player;
 import de.gamejam.model.Winner;
@@ -18,19 +19,24 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import static de.gamejam.model.ui_element.ChipView.IMAGE_SIZE;
 
 public class App extends Application {
 
   private static Scene scene;
 
   private GameController gameController = new GameController();
-  private GridPane mainPane;
+  private GridPane gridPane;
   private GridPane chipQueuePane;
   private Stage stage;
 
@@ -50,18 +56,25 @@ public class App extends Application {
     chipQueuePane = new GridPane();
     fillQueuePane();
 
-    mainPane = new GridPane();
-    BorderPane.setMargin(mainPane, new Insets(5, 5, 5, 5));
-    fillMainPane();
+    gridPane = new GridPane();
+    BorderPane.setMargin(gridPane, new Insets(5, 5, 5, 5));
+    fillGridPane();
 
     GridPane inputPane = new GridPane();
     BorderPane.setMargin(inputPane, new Insets(5, 5, 5, 5));
     fillInputPane(inputPane);
 
-    root.setCenter(mainPane);
-    root.setBottom(chipQueuePane);
-    root.setTop(inputPane);
+    BorderPane mainPane = new BorderPane();
+    mainPane.setCenter(gridPane);
+    mainPane.setBottom(chipQueuePane);
+    mainPane.setTop(inputPane);
 
+    root.setCenter(mainPane);
+
+    Pane explainBoard = createExplainBoard();
+                                                //(top, right, bottom, left)
+    BorderPane.setMargin(explainBoard, new Insets(10, 5, 10, 10));
+    root.setLeft(explainBoard);
     scene = new Scene(root);
 
     stage.setScene(scene);
@@ -93,6 +106,26 @@ public class App extends Application {
     }
   }
 
+  private Pane createExplainBoard() {
+    BorderPane pane = new BorderPane();
+
+    GridPane images = new GridPane();
+    for (int i = 0; i < ChipType.values().length; i++) {
+      ChipType chipType = ChipType.values()[i];
+      String filename = chipType.getFilename();
+      Image image = new Image(
+          getClass().getResource("/" + gameController.getActivePlayer().getColor().getValue() + "_" + filename).toExternalForm());
+      ImageView imageView = new ImageView(image);
+      imageView.setFitHeight(IMAGE_SIZE);
+      imageView.setFitWidth(IMAGE_SIZE);
+      images.add(imageView, 0, i);
+      images.add(new Text(chipType.getDescription()), 1, i);
+    }
+    pane.setCenter(images);
+
+    return pane;
+  }
+
   private void clickUseChip(int column) {
     Player activePlayer = gameController.getActivePlayer();
     // Wenn kein Chip ausgewählt wurde
@@ -101,11 +134,11 @@ public class App extends Application {
     }
     gameController.useChip(column);
     showWin();
-    fillMainPane();
+    fillGridPane();
     fillQueuePane();
   }
 
-  private void showWin(){
+  private void showWin() {
 
     Winner winner = gameController.checkWin();
 
@@ -133,17 +166,19 @@ public class App extends Application {
     dialog.initOwner(this.stage);
     VBox dialogVbox = new VBox(20);
     dialogVbox.getChildren().add(new Text(text));
-    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+    BorderPane pane = new BorderPane();
+    pane.setCenter(dialogVbox);
+    Scene dialogScene = new Scene(pane, 300, 200);
     dialog.setScene(dialogScene);
     dialog.show();
   }
 
-  private void fillMainPane() {
-    mainPane.setAlignment(Pos.CENTER);
+  private void fillGridPane() {
+    gridPane.setAlignment(Pos.CENTER);
     // Aufräumen...
-    mainPane.getChildren().clear();
+    gridPane.getChildren().clear();
 
-    mainPane.setGridLinesVisible(true);
+    gridPane.setGridLinesVisible(true);
     Grid grid = gameController.getGridController().getGrid();
 
     for (int colNumber = 0; colNumber < grid.getChips().size(); colNumber++) {
@@ -153,7 +188,7 @@ public class App extends Application {
         ChipView chipView = column.get(rowNumber);
         int finalColNumber = colNumber;
         chipView.setOnMouseClicked(mouseEvent -> clickUseChip(finalColNumber));
-        mainPane.add(chipView, colNumber, gridRowNumber++);
+        gridPane.add(chipView, colNumber, gridRowNumber++);
       }
     }
   }
@@ -170,7 +205,7 @@ public class App extends Application {
     int colCount = 0;
     // Zukünftige Chips anfügen
     for (Chip chip : player.getChipQueue().getNextChips()) {
-      ChipView chipView = new ChipView(-1,-1);
+      ChipView chipView = new ChipView(-1, -1);
       chipView.setOpacity(.5);
       chipView.setChip(chip);
       chipQueuePane.add(chipView, colCount, 0);
