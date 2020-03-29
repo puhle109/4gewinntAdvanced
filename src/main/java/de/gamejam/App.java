@@ -197,6 +197,7 @@ public class App extends Application {
 
     gameController.resetGame();
     fillGridPane();
+    fillQueuePane();
   }
 
   private void fillGridPane() {
