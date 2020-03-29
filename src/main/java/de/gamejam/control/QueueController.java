@@ -12,6 +12,10 @@ public class QueueController {
   public static final int QUEUE_SIZE = 4;
 
   public void initQueue(ChipQueue chipQueue, ChipColor color) {
+
+    chipQueue.setUsableChips(null);
+    chipQueue.setNextChips(null);
+
     // Benutzbare Chips auffüllen
     for (int i = 0; i < QUEUE_SIZE; i++) {
       chipQueue.getUsableChips().add(generateNewChip(color));
