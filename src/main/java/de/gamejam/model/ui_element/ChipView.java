@@ -3,8 +3,6 @@ package de.gamejam.model.ui_element;
 import de.gamejam.model.Chip;
 import de.gamejam.model.ChipColor;
 
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
@@ -14,23 +12,19 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.util.Duration;
 
 public class ChipView extends BorderPane {
 
   public static final int IMAGE_SIZE = 50;
-  private Chip chip;
-
   protected ImageView imageView;
-
+  private Chip chip;
   private int row;
   private int col;
 
-  public ChipView(int col,int row) {
+  public ChipView(int col, int row) {
     super();
-    this.row=row;
-    this.col=col;
+    this.row = row;
+    this.col = col;
     imageView = new ImageView();
     imageView.setFitHeight(IMAGE_SIZE);
     imageView.setFitWidth(IMAGE_SIZE);
@@ -39,11 +33,11 @@ public class ChipView extends BorderPane {
     this.setCenter(imageView);
   }
 
-  public int getRow(){
+  public int getRow() {
     return this.row;
   }
 
-  public int getCol(){
+  public int getCol() {
     return this.col;
   }
 
@@ -76,6 +70,4 @@ public class ChipView extends BorderPane {
   public boolean isFree() {
     return getChip() == null;
   }
-
-
 }
