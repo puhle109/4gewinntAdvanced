@@ -92,11 +92,11 @@ public class GridController {
   }
 
   private Winner getWin(int check, int size, ChipColor color) {
-      if (check == size) {
-          return color == ChipColor.RED ? Winner.RED : Winner.BLUE;
-      } else {
-          return Winner.NONE;
-      }
+    if (check == size) {
+      return color == ChipColor.RED ? Winner.RED : Winner.BLUE;
+    } else {
+      return Winner.NONE;
+    }
   }
 
   public Winner checkWin() {
@@ -156,11 +156,6 @@ public class GridController {
     return endWin;
   }
 
-  //TODO: alle steine die nicht auf einem stein oder dem boden liegen "fallen" herunter, bis alle liegen
-  public void gravity() {
-
-  }
-
   public void useSpecial(ChipView chipView) {
 
     switch (chipView.getChip().getChipType()) {
@@ -180,6 +175,11 @@ public class GridController {
         skillFlip(chipView);
         break;
     }
+
+    // Gravity für alle Spalten ausführen
+    for (int i = 0; i < grid.getColumns(); i++) {
+      gravity(i);
+    }
   }
 
   private void skillSwitch(ChipView chipView) {
@@ -189,7 +189,8 @@ public class GridController {
     ChipView left = getGrid().getChipViewAt(row - 1, col);
     ChipView right = getGrid().getChipViewAt(row + 1, col);
 
-    if (left != null && right != null) {
+    if (left != null && right != null
+        && left.getChip().isNotProtected() && right.getChip().isNotProtected()) {
       Chip tmp = left.getChip();
       left.setChip(right.getChip());
       right.setChip(tmp);
@@ -203,30 +204,25 @@ public class GridController {
     ChipView left = getGrid().getChipViewAt(row - 1, col);
     ChipView right = getGrid().getChipViewAt(row + 1, col);
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (left != null) {
+    if (left != null && left.getChip().isNotProtected()) {
       left.setChip(null);
     }
-    if (right != null) {
+    if (right != null && right.getChip().isNotProtected()) {
       right.setChip(null);
     }
-    if (down != null) {
+    if (down != null && down.getChip().isNotProtected()) {
       down.setChip(null);
     }
     chipView.setChip(null);
-
-    // TODO: 29.03.2020 Wenn bei den gelöschten chips drüber stehen müssen dese nachrutschen
   }
 
   private void skillLightning(ChipView chipView) {
     int row = chipView.getRow();
     int col = chipView.getCol();
 
-    ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null) {
-      down.setChip(null);
-      down = getGrid().getChipViewAt(row, col - 2);
-
-      if (down != null) {
+    for (int i = 1; i <= 2; i++) {
+      ChipView down = getGrid().getChipViewAt(row, col - i);
+      if (down != null && down.getChip().isNotProtected()) {
         down.setChip(null);
       }
     }
@@ -238,7 +234,7 @@ public class GridController {
     ChipColor color = chipView.getColor();
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null) {
+    if (down != null && down.getChip().isNotProtected()) {
       down.getChip().setChipColor(color);
     }
   }
@@ -248,10 +244,27 @@ public class GridController {
     int col = chipView.getCol();
 
     ChipView down = getGrid().getChipViewAt(row, col - 1);
-    if (down != null) {
+    if (down != null && down.getChip().isNotProtected()) {
       Chip tmp = down.getChip();
       down.setChip(chipView.getChip());
       chipView.setChip(tmp);
+    }
+  }
+
+  /**
+   * alle steine die nicht auf einem stein oder dem boden liegen "fallen" herunter, bis alle liegen
+   */
+  public void gravity(int col) {
+    LinkedList<ChipView> chipViews = grid.getChips().get(col);
+
+    for (int i = chipViews.size() - 1; i > 0 ; i--) {
+      ChipView chipView = chipViews.get(i);
+      ChipView nextChipView = chipViews.get(i - 1);
+
+      if (chipView.getChip() != null && nextChipView.getChip() == null) {
+        nextChipView.setChip(chipView.getChip());
+        chipView.setChip(null);
+      }
     }
   }
 }

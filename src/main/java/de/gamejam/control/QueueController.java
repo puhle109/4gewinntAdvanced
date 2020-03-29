@@ -65,12 +65,14 @@ public class QueueController {
     ChipType chipType;
     if (r <= 0.6) {
       chipType = ChipType.SIMPLE;
-    } else if (r <= 0.7) {
+    } else if (r <= 0.65) {
       chipType = ChipType.BOMB;
-//    } else if (r <= 0.8) {
-//      chipType = ChipType.COLOR;
-//    } else if (r <= 0.9) {
-//      chipType = ChipType.TABLE_FLIP;
+    } else if (r <= 0.7) {
+      chipType = ChipType.LIGHTNING;
+    } else if (r <= 0.75) {
+      chipType = ChipType.TABLE_FLIP;
+    } else if (r <= 0.85) {
+      chipType = ChipType.PROTECT;
     } else {
       chipType = ChipType.SWITCH;
     }
