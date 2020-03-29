@@ -45,7 +45,7 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     this.stage = stage;
-    stage.setTitle("Super tolles Spiel");
+    stage.setTitle("Vier Steine sortieren - Das Spiel!");
     gameController.createPlayer(ChipColor.BLUE);
     gameController.createPlayer(ChipColor.RED);
 
