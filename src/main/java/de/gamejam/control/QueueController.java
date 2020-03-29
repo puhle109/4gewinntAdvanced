@@ -77,8 +77,10 @@ public class QueueController {
       chipType = ChipType.TABLE_FLIP;
     } else if (r <= 0.85) {
       chipType = ChipType.PROTECT;
-    }else if (r <= 0.95) {
+    }else if (r <= 0.90) {
       chipType = ChipType.COLOR;
+    } else if (r <= 95) {
+      chipType = ChipType.BALLOON;
     } else {
       chipType = ChipType.SWITCH;
     }

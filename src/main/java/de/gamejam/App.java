@@ -56,9 +56,8 @@ public class App extends Application {
     mediaPlayer.setVolume(1.0);
     mediaPlayer.play();
 
-
     this.stage = stage;
-    stage.setTitle("Super tolles Spiel");
+    stage.setTitle("Ordentliche Reihen bauen - Das Spiel");
     gameController.createPlayer(ChipColor.BLUE);
     gameController.createPlayer(ChipColor.RED);
 

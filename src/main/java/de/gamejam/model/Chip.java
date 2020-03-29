@@ -46,4 +46,8 @@ public class Chip {
   public boolean isNotProtected(){
     return chipType != ChipType.PROTECT;
   }
+
+  public boolean isBalloon(){
+    return chipType == ChipType.BALLOON;
+  }
 }
