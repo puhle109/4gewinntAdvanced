@@ -11,8 +11,9 @@ public class SoundMachine {
     if (Sound.NONE.equals(sound)) {
       return;
     }
-    Media hit = new Media(getClass().getResource("/sound/" + sound.getFilename()).toExternalForm());
-    MediaPlayer mediaPlayer = new MediaPlayer(hit);
+
+    Media media = new Media(getClass().getResource("/sound/" + sound.getFilename()).toExternalForm());
+    MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.setVolume(1.0);
     mediaPlayer.play();
   }
