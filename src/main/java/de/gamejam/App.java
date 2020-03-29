@@ -114,7 +114,7 @@ public class App extends Application {
       ChipType chipType = ChipType.values()[i];
       String filename = chipType.getFilename();
       Image image = new Image(
-          getClass().getResource("/" + gameController.getActivePlayer().getColor().getValue() + "_" + filename).toExternalForm());
+          getClass().getResource("/img/" + gameController.getActivePlayer().getColor().getValue() + "_" + filename).toExternalForm());
       ImageView imageView = new ImageView(image);
       imageView.setFitHeight(IMAGE_SIZE);
       imageView.setFitWidth(IMAGE_SIZE);
