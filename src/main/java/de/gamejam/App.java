@@ -195,6 +195,9 @@ public class App extends Application {
     Scene dialogScene = new Scene(pane, 300, 200);
     dialog.setScene(dialogScene);
     dialog.show();
+
+    gameController.resetGame();
+    fillGridPane();
   }
 
   private void fillGridPane() {

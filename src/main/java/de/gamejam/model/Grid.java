@@ -11,8 +11,11 @@ public class Grid {
     private List<LinkedList<ChipView>> fields;
 
     public Grid(int countRow, int countCol) {
-        fields = new ArrayList<>();
+        init(countRow, countCol);
+    }
 
+    public void init(int countRow, int countCol){
+        fields = new ArrayList<>();
         for (int x = 0; x < countCol; x++) {
             LinkedList<ChipView> col = new LinkedList<>();
             for (int y = 0; y < countRow; y++) {

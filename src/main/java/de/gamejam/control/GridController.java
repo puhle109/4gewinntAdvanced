@@ -13,8 +13,8 @@ public class GridController {
 
   private final Grid grid;
 
-  public GridController() {
-    grid = new Grid(7, 9);
+  public GridController(int rows, int cols){
+    grid = new Grid(rows, cols);
   }
 
   public Grid getGrid() {
