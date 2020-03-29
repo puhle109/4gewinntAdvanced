@@ -175,9 +175,6 @@ public class GridController {
         skillFlip(chipView);
         break;
     }
-
-    // Gravity für alle Spalten ausführen
-    gravity();
   }
 
   private void skillSwitch(ChipView chipView) {
